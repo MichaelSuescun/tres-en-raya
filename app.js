@@ -1,26 +1,27 @@
 const gridContainer = document.querySelector('.grid_container')
 const squares = document.querySelectorAll('.square')
 const winnerAlert = document.querySelector('.winner_alert')
+const resetButton = document.querySelector('#reset')
 
-let cont = 0
-let winner = {
-  state: false,
-  player: ''
-}
+let cont = 1
+let winner = false
 
 function checkWinner(winnerSimbol) {
-  winner.state = true
+  winner = true
   winnerAlert.style.display = 'inline'
   winnerAlert.textContent = `Ganador: ${winnerSimbol}`
 }
 
 gridContainer.addEventListener('click', (e) => {
-  if (!(cont <= 8)) {
+
+  // Comprueba la cantidad de turnos
+  if (!(cont <= 9)) {
     console.log('Ya no hay turnos');
     return true
   }
 
-  if (winner.state) {
+  // Comprueba si ya hay un ganador
+  if (winner) {
     return true
   }
 
@@ -41,44 +42,50 @@ gridContainer.addEventListener('click', (e) => {
   const { textContent: SC8 } = squares[8]
 
   if ((SC0 != '') && (SC0 == SC1) && (SC0 == SC2)) {
-    winner.player = SC0 
-    checkWinner(winner.player)
+    checkWinner(SC0)
   }
 
   if ((SC0 != '') && (SC0 == SC4) && (SC0 == SC8)) {
-    winner.player = SC0
-    checkWinner(winner.player)
+    checkWinner(SC0)
   }
 
   if ((SC0 != '') && (SC0 == SC3) && (SC0 == SC6)) {
-    winner.player = SC0
-    checkWinner(winner.player)
+    checkWinner(SC0)
   }
 
   if ((SC1 != '') && (SC1 == SC4) && (SC1 == SC7)) {
-    winner.player = SC1
-    checkWinner(winner.player)
+    checkWinner(SC1)
   }
 
   if ((SC2 != '') && (SC2 == SC4) && (SC2 == SC6)) {
-    winner.player = SC2
-    checkWinner(winner.player)
+    checkWinner(SC2)
   }
 
   if ((SC3 != '') && (SC3 == SC4) && (SC3 == SC5)) {
-    winner.player = SC3
-    checkWinner(winner.player)
+    checkWinner(SC3)
   }
 
   if ((SC2 != '') && (SC2 == SC5) && (SC2 == SC8)) {
-    winner.player = SC2
-    checkWinner(winner.player)
+    checkWinner(SC2)
   }
 
   if ((SC6 != '') && (SC6 == SC7) && (SC6 == SC8)) {
-    winner.player = SC6
-    checkWinner(winner.player)
+    checkWinner(SC6)
   }
 
   cont++
+})
+
+resetButton.addEventListener('click', () => {
+  cont = 1
+  winner = false
+  winnerAlert.style.display = 'none'
+  winnerAlert.textContent = ``
+
+  for (let i = 0; i < squares.length; i++) {
+    const square = squares[i]
+    square.classList.remove('red')
+    square.classList.remove('blue')
+    square.textContent = ''
+  }
 })
