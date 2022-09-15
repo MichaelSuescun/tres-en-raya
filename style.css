@@ -1,26 +1,41 @@
+:root {
+  --player-color_1: #EC7063;
+  --player-color_2: #5DADE2;
+}
+
 * {
   box-sizing: border-box;
 }
 
-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  place-items: center;
-  height: 100vh;
-  font-family: sans-serif;
-  background-color: #58D68D;
-}
-
+/* body */
 .grid_container {
   display: grid;
+  grid-template-columns: 2fr 1fr;
+  background-color: #58D68D;
+  height: 100vh;
+  place-items: center;
+  font-family: sans-serif;
+}
+
+.disabled_grid_container {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Estilos del tablero */
+.grid_container_board {
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 400px;
-  height: 400px;
+  grid-template-rows: repeat(3, 1fr);
+  width: 35vw;
+  min-width: 350px;
+  height: 35vw;
+  min-height: 350px;
   background-color: #F2F3F4;
   box-shadow: 10px 10px 5px black;
 }
 
-.grid_container,
+.grid_container_board,
 .square {
   border: 1px solid black;
 }
@@ -39,16 +54,89 @@ body {
 }
 
 .red {
-  background-color: #EC7063;
+  background-color: var(--player-color_1);
 }
 
 .blue {
-  background-color: #5DADE2;
+  background-color: var(--player-color_2);
 }
 
-.winner_alert {
-  /* border: 1px solid black; */
-  font-size: 20px;
-  padding: 5px;
+/* Estilos de menú */
+.grid_container_menu {
+  min-width: 158px;
+  width: 50%;
+}
+
+.players_score {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 50%;
+}
+
+.player_simbol_1 {
+  background-color: var(--player-color_1);
+}
+
+.player_simbol_2 {
+  background-color: var(--player-color_2);
+}
+
+.player_simbol_2,
+.player_simbol_1 {
+  font-size: 30px;
+}
+
+.player_simbol_2,
+.player_simbol_1,
+.player_score {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.player_score {
+  font-size: 60px;
+  background-color: rgb(242, 243, 244);
+}
+
+.flex_container_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex_container_buttons button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+}
+
+/* Estilos del modal */
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  background-color: yellow;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.winner_message {
+  font-size: 32px;
   font-weight: 700;
 }
+
+.modal button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+}
+
+

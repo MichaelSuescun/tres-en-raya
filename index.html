@@ -10,21 +10,46 @@
 </head>
 <body>
   <div class="grid_container">
-    <div class="square" id="0"></div>
-    <div class="square" id="1"></div>
-    <div class="square" id="2"></div>
-    <div class="square" id="3"></div>
-    <div class="square" id="4"></div>
-    <div class="square" id="5"></div>
-    <div class="square" id="6"></div>
-    <div class="square" id="7"></div>
-    <div class="square" id="8"></div>
+    <div class="grid_container_board">
+      <div class="square" id="0"></div>
+      <div class="square" id="1"></div>
+      <div class="square" id="2"></div>
+      <div class="square" id="3"></div>
+      <div class="square" id="4"></div>
+      <div class="square" id="5"></div>
+      <div class="square" id="6"></div>
+      <div class="square" id="7"></div>
+      <div class="square" id="8"></div>
+    </div>
+    <div class="grid_container_menu">
+      <div class="players_score">
+        <div class="player">
+          <div class="player_simbol_1">X</div>
+          <div class="player_score" id="player_score_x"></div>
+        </div>
+        <div class="player">
+          <div class="player_simbol_2">O</div>
+          <div class="player_score" id="player_score_y"></div>
+        </div>
+      </div>
+      <div class="flex_container_buttons">
+        <button id="reset">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="grid_container_menu">
-    <button id="reset">Reinicio</button>
-  </div>
-  <div class="winner_alert" style="display: none;"></div>
+  <!-- <div class="modal">
+    <div class="winner_message">Ganador: X</div>
+    <button id="nextGame">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+      </svg>
+    </button>
+  </div> -->
 
-  <script src="app.js"></script>
+  <script src="app.js" type="module"></script>
 </body>
 </html>

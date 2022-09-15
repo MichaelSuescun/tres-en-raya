@@ -1,18 +1,74 @@
-const gridContainer = document.querySelector('.grid_container')
+import { Modal } from './Modal.js';
+
+const gridContainerBoard = document.querySelector('.grid_container_board')
 const squares = document.querySelectorAll('.square')
-const winnerAlert = document.querySelector('.winner_alert')
 const resetButton = document.querySelector('#reset')
 
+const gridContainerMenu = document.querySelector('.grid_container_menu')
+const modal = new Modal()
+gridContainerMenu.insertAdjacentElement('afterend', modal.getModal())
+const nextGameButton = document.querySelector('#nextGame')
+
+const playerScoreXAlert = document.querySelector('#player_score_x')
+const playerScoreYAlert = document.querySelector('#player_score_y')
+
+const sequence1 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+const sequence2 = [[2, 4, 6]]
+const sequence3 = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+const sequence4 = [[0, 4, 8]]
+
 let cont = 1
+let playerScoreX = 0
+let playerScoreY = 0
 let winner = false
 
+playerScoreXAlert.textContent = playerScoreX
+playerScoreYAlert.textContent = playerScoreY
+
+// Functions
 function checkWinner(winnerSimbol) {
   winner = true
-  winnerAlert.style.display = 'inline'
-  winnerAlert.textContent = `Ganador: ${winnerSimbol}`
+
+  if (winnerSimbol == 'X') {
+    playerScoreXAlert.textContent = ++playerScoreX
+  } else if (winnerSimbol == 'O') {
+    playerScoreYAlert.textContent = ++playerScoreY
+  }
+
+  modal.open()
+  modal.setWinner(winnerSimbol)
 }
 
-gridContainer.addEventListener('click', (e) => {
+function clearBoard() {
+  for (const square of squares) {
+    square.classList.remove('red')
+    square.classList.remove('blue')
+    square.textContent = ''
+  }
+}
+
+// Events listeners
+resetButton.addEventListener('click', () => {
+  cont = 1
+  winner = false
+  playerScoreX = 0
+  playerScoreY = 0
+
+  playerScoreXAlert.textContent = playerScoreX
+  playerScoreYAlert.textContent = playerScoreY
+
+  clearBoard()
+})
+
+nextGameButton.addEventListener('click', () => {
+  cont = 1
+  winner = false
+
+  clearBoard()
+  modal.close()
+})
+
+gridContainerBoard.addEventListener('click', (e) => {
 
   // Comprueba la cantidad de turnos
   if (!(cont <= 9)) {
@@ -25,67 +81,57 @@ gridContainer.addEventListener('click', (e) => {
     return true
   }
 
-  const squareNumber = e.target.id
-  const square = squares[squareNumber]
+  // Identifica donde el usuario hizo click y agrega un valor
+  const IdSquare = e.target.id
+  const square = squares[IdSquare]
 
-  square.textContent = (cont % 2 === 0) ? 'X' : 'O'
-  square.classList.add((cont % 2 === 0) ? 'red' : 'blue')
-
-  const { textContent: SC0 } = squares[0]
-  const { textContent: SC1 } = squares[1]
-  const { textContent: SC2 } = squares[2]
-  const { textContent: SC3 } = squares[3]
-  const { textContent: SC4 } = squares[4]
-  const { textContent: SC5 } = squares[5]
-  const { textContent: SC6 } = squares[6]
-  const { textContent: SC7 } = squares[7]
-  const { textContent: SC8 } = squares[8]
-
-  if ((SC0 != '') && (SC0 == SC1) && (SC0 == SC2)) {
-    checkWinner(SC0)
+  if (!square.textContent) {
+    square.textContent = (cont % 2 === 0) ? 'X' : 'O'
+    square.classList.add((cont % 2 === 0) ? 'red' : 'blue')
+    cont++
   }
 
-  if ((SC0 != '') && (SC0 == SC4) && (SC0 == SC8)) {
-    checkWinner(SC0)
+  // Comprueba los valores de la secuencia de cuadros 1-2-3, 4-5-6, 7-8-9
+  for (const sequence of sequence1) {
+    const { textContent: SC0 } = squares[sequence[0]]
+    const { textContent: SC1 } = squares[sequence[1]]
+    const { textContent: SC2 } = squares[sequence[2]]
+
+    if ((SC0 != '') && (SC0 == SC1) && (SC0 == SC2)) {
+      checkWinner(SC0)
+    }
   }
 
-  if ((SC0 != '') && (SC0 == SC3) && (SC0 == SC6)) {
-    checkWinner(SC0)
+  // Comprueba los valores de la secuencia de cuadros 3-5-7
+  for (const sequence of sequence2) {
+    const { textContent: SC0 } = squares[sequence[0]]
+    const { textContent: SC1 } = squares[sequence[1]]
+    const { textContent: SC2 } = squares[sequence[2]]
+
+    if ((SC0 != '') && (SC0 == SC1) && (SC0 == SC2)) {
+      checkWinner(SC0)
+    }
   }
 
-  if ((SC1 != '') && (SC1 == SC4) && (SC1 == SC7)) {
-    checkWinner(SC1)
+  // Comprueba los valores de la secuencia de cuadros 1-4-7, 2-5-8, 3-6-9
+  for (const sequence of sequence3) {
+    const { textContent: SC0 } = squares[sequence[0]]
+    const { textContent: SC1 } = squares[sequence[1]]
+    const { textContent: SC2 } = squares[sequence[2]]
+
+    if ((SC0 != '') && (SC0 == SC1) && (SC0 == SC2)) {
+      checkWinner(SC0)
+    }
   }
 
-  if ((SC2 != '') && (SC2 == SC4) && (SC2 == SC6)) {
-    checkWinner(SC2)
-  }
+  // Comprueba los valores de la secuencia de cuadros 1-5-9
+  for (const sequence of sequence4) {
+    const { textContent: SC0 } = squares[sequence[0]]
+    const { textContent: SC1 } = squares[sequence[1]]
+    const { textContent: SC2 } = squares[sequence[2]]
 
-  if ((SC3 != '') && (SC3 == SC4) && (SC3 == SC5)) {
-    checkWinner(SC3)
-  }
-
-  if ((SC2 != '') && (SC2 == SC5) && (SC2 == SC8)) {
-    checkWinner(SC2)
-  }
-
-  if ((SC6 != '') && (SC6 == SC7) && (SC6 == SC8)) {
-    checkWinner(SC6)
-  }
-
-  cont++
-})
-
-resetButton.addEventListener('click', () => {
-  cont = 1
-  winner = false
-  winnerAlert.style.display = 'none'
-  winnerAlert.textContent = ``
-
-  for (let i = 0; i < squares.length; i++) {
-    const square = squares[i]
-    square.classList.remove('red')
-    square.classList.remove('blue')
-    square.textContent = ''
+    if ((SC0 != '') && (SC0 == SC1) && (SC0 == SC2)) {
+      checkWinner(SC0)
+    }
   }
 })
