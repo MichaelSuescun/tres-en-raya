@@ -1,4 +1,4 @@
-import { Modal } from './Modal.js';
+import { Modal } from './Modal.js'
 
 const gridContainerBoard = document.querySelector('.grid_container_board')
 const squares = document.querySelectorAll('.square')
@@ -7,6 +7,7 @@ const resetButton = document.querySelector('#reset')
 const gridContainerMenu = document.querySelector('.grid_container_menu')
 const modal = new Modal()
 gridContainerMenu.insertAdjacentElement('afterend', modal.getModal())
+
 const nextGameButton = document.querySelector('#nextGame')
 
 const playerScoreXAlert = document.querySelector('#player_score_x')
@@ -16,7 +17,6 @@ const sequence1 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
 const sequence2 = [[2, 4, 6]]
 const sequence3 = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
 const sequence4 = [[0, 4, 8]]
-
 let cont = 1
 let playerScoreX = 0
 let playerScoreY = 0
@@ -35,8 +35,9 @@ function checkWinner(winnerSimbol) {
     playerScoreYAlert.textContent = ++playerScoreY
   }
 
+  gridContainerMenu.style.pointerEvents = 'none'
   modal.open()
-  modal.setWinner(winnerSimbol)
+  modal.setMessage(`Ganador: ${winnerSimbol}`)
 }
 
 function clearBoard() {
@@ -66,6 +67,7 @@ nextGameButton.addEventListener('click', () => {
 
   clearBoard()
   modal.close()
+  gridContainerMenu.style.pointerEvents = 'auto'
 })
 
 gridContainerBoard.addEventListener('click', (e) => {
@@ -73,6 +75,8 @@ gridContainerBoard.addEventListener('click', (e) => {
   // Comprueba la cantidad de turnos
   if (!(cont <= 9)) {
     console.log('Ya no hay turnos');
+    modal.setMessage('Ya no hay turnos')
+    modal.open()
     return true
   }
 
@@ -85,13 +89,15 @@ gridContainerBoard.addEventListener('click', (e) => {
   const IdSquare = e.target.id
   const square = squares[IdSquare]
 
-  if (!square.textContent) {
-    square.textContent = (cont % 2 === 0) ? 'X' : 'O'
-    square.classList.add((cont % 2 === 0) ? 'red' : 'blue')
-    cont++
+  if (square.textContent) {
+    return true
   }
 
-  // Comprueba los valores de la secuencia de cuadros 1-2-3, 4-5-6, 7-8-9
+  square.textContent = (cont % 2 === 0) ? 'X' : 'O'
+  square.classList.add((cont % 2 === 0) ? 'red' : 'blue')
+  cont++
+
+  // Comprueba los valores de la secuencia de cuadros: 1-2-3, 4-5-6, 7-8-9
   for (const sequence of sequence1) {
     const { textContent: SC0 } = squares[sequence[0]]
     const { textContent: SC1 } = squares[sequence[1]]
@@ -102,7 +108,7 @@ gridContainerBoard.addEventListener('click', (e) => {
     }
   }
 
-  // Comprueba los valores de la secuencia de cuadros 3-5-7
+  // Comprueba los valores de la secuencia de cuadros: 3-5-7
   for (const sequence of sequence2) {
     const { textContent: SC0 } = squares[sequence[0]]
     const { textContent: SC1 } = squares[sequence[1]]
@@ -113,7 +119,7 @@ gridContainerBoard.addEventListener('click', (e) => {
     }
   }
 
-  // Comprueba los valores de la secuencia de cuadros 1-4-7, 2-5-8, 3-6-9
+  // Comprueba los valores de la secuencia de cuadros: 1-4-7, 2-5-8, 3-6-9
   for (const sequence of sequence3) {
     const { textContent: SC0 } = squares[sequence[0]]
     const { textContent: SC1 } = squares[sequence[1]]
@@ -124,7 +130,7 @@ gridContainerBoard.addEventListener('click', (e) => {
     }
   }
 
-  // Comprueba los valores de la secuencia de cuadros 1-5-9
+  // Comprueba los valores de la secuencia de cuadros: 1-5-9
   for (const sequence of sequence4) {
     const { textContent: SC0 } = squares[sequence[0]]
     const { textContent: SC1 } = squares[sequence[1]]
@@ -134,4 +140,5 @@ gridContainerBoard.addEventListener('click', (e) => {
       checkWinner(SC0)
     }
   }
+
 })

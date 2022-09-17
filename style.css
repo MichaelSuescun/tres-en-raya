@@ -10,29 +10,32 @@
 /* body */
 .grid_container {
   display: grid;
+  place-items: center;
   grid-template-columns: 2fr 1fr;
   background-color: #58D68D;
   height: 100vh;
-  place-items: center;
   font-family: sans-serif;
 }
 
-.disabled_grid_container {
+/* .disabled_grid_container {
   pointer-events: none;
   opacity: 0.4;
-}
+} */
 
 /* Estilos del tablero */
 .grid_container_board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+
+  background-color: #F2F3F4;
+
+  box-shadow: 10px 10px 5px black;
+
   width: 35vw;
   min-width: 350px;
   height: 35vw;
   min-height: 350px;
-  background-color: #F2F3F4;
-  box-shadow: 10px 10px 5px black;
 }
 
 .grid_container_board,
@@ -44,14 +47,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: auto;
   height: auto;
+
   font-size: 32px;
 }
 
-.square:hover {
+/* .square:hover {
   background-color: rgb(203, 203, 203);
-}
+} */
 
 .red {
   background-color: var(--player-color_1);
@@ -69,13 +74,16 @@
 
 .players_score {
   display: flex;
+
   margin-bottom: 10px;
 }
 
 .player {
   display: flex;
   flex-direction: column;
+
   border: 1px solid black;
+
   width: 50%;
 }
 
@@ -96,11 +104,13 @@
 .player_simbol_1,
 .player_score {
   border: 1px solid black;
+
   text-align: center;
 }
 
 .player_score {
   font-size: 60px;
+
   background-color: rgb(242, 243, 244);
 }
 
@@ -113,30 +123,42 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 50px;
 }
 
 /* Estilos del modal */
 .modal {
-  display: none;
   position: absolute;
-  z-index: 2;
-  background-color: yellow;
+
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+
   border: 1px solid black;
-  padding: 10px;
   border-radius: 5px;
+
+  background-color: rgb(220, 220, 220);
+
+  height: 200px;
+  width: 400px;
+  padding: 10px;
 }
 
 .winner_message {
-  font-size: 32px;
+  margin-bottom: 10px;
+
   font-weight: 700;
+  font-size: 32px;
 }
 
 .modal button {
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 50px;
 }
-
-
